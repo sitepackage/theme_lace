@@ -1,0 +1,5 @@
+<div id="article" class="inner_content page">
+  <h1 class="topic1">[% article.name %]</h1>
+  <div class="author">[% 'Posted by' | loc %] [% article.author %], [% article.published_at | date ('%c') %]</div>
+  [% article.content %]
+</div>

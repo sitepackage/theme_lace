@@ -1,0 +1,112 @@
+<div id="frontpage" class="inner_content">
+  [%- if settings.welcome_message %]
+  <h1 class="topic1">[% pages.${settings.welcome_message}.name || 'Welcome' %]</h1>
+  <div class="padding">
+    [% pages.${settings.welcome_message}.content %]
+  </div>
+  [%- end %]
+
+  <!--<div id="collection">
+    [% products = collections.frontpage.products(limit = settings.frontpage_product_limit || 16, pageset => 0) %]
+    <h1 class="topic1">[% collections.frontpage.name || 'Frontpage' %]</h1>
+    [%- if !products.first %]
+    <p style="background-color: #f4f4f4; padding: 10px">
+      คุณต้องเลือกคอลลเคชัน "[% collections.frontpage ? collections.frontpage.name : 'Frontpage' %]" ให้กับสินค้าที่ต้องการแสดงบริเวณนี้
+    </p>
+    [%- else %]
+    <div class="products">
+      <ul class="grid">
+        [%- foreach product in products %]
+        <li>
+          <a href="[% product.uri %]">
+            <div class="image" style="background-image: url('[% product.featured_image.src | image_uri ('small') %]')"></div>
+          </a>
+          <div class="title"><a href="[% product.uri %]">[% product.name %]</a> <span class="hint">[% product.caption %]</span></div>
+          <div class="price">[% product.price_min | number('0') | money_with_native_currency %]</div>
+          <div class="buy">
+            [%- if product.price_varies %]
+            <a href="[% product.uri %]" title="[% product.nane %]">[% 'cart_add_mini.png' | asset_uri | image_tag (product.nane) %]</a>
+            [%- else %]
+            <form action="[% uri_for('/cart/add') %]" method="post">
+              <input type="hidden" name="variant" value="[% product.variants.first.id %]" />
+              <input type="image" name="add" value="Add to Cart" src="[% 'cart_add_mini.png' | asset_uri %]" />
+            </form>
+            [%- end %]
+          </div>
+          <div class="clear"></div>
+        </li>
+        [%- end %]
+      </ul>
+      <div class="clear"></div>
+    </div>
+    [%- end %]
+  </div>-->
+  
+  [%- collections.frontpage = settings.frontpage_collection ? collections.${settings.frontpage_collection} : collections.frontpage %]
+  [%- set products = collections.frontpage.products(limit = settings.frontpage_product_limit || 20) %]  
+  <div id="collection">
+    <h1 class="topic1"><span>[% collections.frontpage ? collections.frontpage.name : 'New Arrival' | html %]</span></h1>
+    <div class="padding">
+      [%- if !products %]
+      คุณต้องเลือกคอลเลคชันสินค้าที่ต้องการแสดงที่หน้าธีม, ตั้งค่าธีม
+      [%- elsif products.size == 0 %]
+      ไม่พบสินค้าในคอลเลคชันนี้
+      [%- else %]      
+      <ul class="grid">
+        [%- foreach product in products %]
+        <li>
+          [%- if !product.available %]
+          <div class="soldout"></div>
+          [%- end %]            
+          <a href="[% product.uri %]">
+            <span class="image" style="background-image: url('[% product.featured_image.src | image_uri ('small') %]')"></span>
+          </a>
+          <div class="title">[% product.name | html | link_to product.uri %]</div>
+          <div class="price_bg">
+          <div class="price">[% if product.price_max != "0.00" %][% product.price | money_without_decimal %][% end %]</div>
+          [%- if  !settings.ecommerce_enabled %]            
+          <div class="buy">
+            [%- if product.price_varies %]
+            [% '<span class="view buttons">view</span>'| link_to (product.uri, product.name) %]
+            [%- else %]
+            <form action="/cart/add" method="post">
+              <input type="hidden" name="variant" value="[% product.variants.first.id %]" />
+              <input type="button" class="buttons add_to_cart" onclick="submit(); return false" title="[% 'Add to Cart' | loc %]" />
+            </form>
+            [%- end %]
+          </div>
+          [%- end %]          
+          </div>
+          <div class="clear" ></div>
+        </li>
+        [%- end %]
+      </ul>
+      <div class="clear"></div>
+      [%- end %]
+    </div>
+  </div>
+
+  [%- if settings.frontpage_blog %]
+  <div class="posts">
+    <h2 class="topic2">[% blogs.${settings.frontpage_blog}.name | link_to blogs.${settings.frontpage_blog}.uri %]</h2>
+    <ul>
+      [%- foreach article in blogs.${settings.frontpage_blog}.articles (limit = settings.frontpage_article_limit || 5) %]
+      <li>[% article.name | link_to article.uri %]</li>
+      [%- end %]
+    </ul>
+  </div>
+  [%- end %]
+
+  [%- if settings.frontpage_discussion %]
+  <div class="posts curved">
+    <h2 class="topic2">[% discussions.${settings.frontpage_discussion}.name | link_to discussions.${settings.frontpage_discussion}.uri %]</h2>
+    <ul>
+      [%- foreach post in discussions.${settings.frontpage_discussion}.posts (limit = settings.frontpage_discussion_limit || 5) %]
+      <li>[% post.subject | truncate(108) | link_to post.uri %]</li>
+      [%- end %]
+    </ul>
+  </div>
+  [%- end %]
+  <div class="clear"></div>
+
+</div>

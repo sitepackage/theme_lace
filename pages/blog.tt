@@ -1,0 +1,21 @@
+[% articles = blog.articles(limit = 10) %]
+<div id="blog" class="inner_content page">
+  <h1 class="topic1">[% blog.name %]</h1>
+  [%- if !articles.first %]
+  <p>[% 'Blog is empty' | loc %]</p>
+  [% else%]
+  <ul>
+    [% foreach article in articles %]
+  <li>
+    <h2 class="topic2"><a href="[% article.uri %]">[% article.name %]</a></h2>
+    <div class="author">[% article.author %], [% article.published_at | date ('%c') %]</div>
+    <div class="excerpt">
+      [%- read_more = 'read more' | loc | link_to article.uri %]
+      [% article.content | strip_html | truncatewords (500, '&hellip; ' _ read_more) %]
+    </div>
+  </li>
+    [% end %]
+  </ul>
+  [% end %]
+  [% pageset | pagination if pageset && pageset.last_page > 1 %]
+</div>
