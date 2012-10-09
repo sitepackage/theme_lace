@@ -50,7 +50,7 @@
       
       [%- if !settings.collection_enabled %]      
       <div class="sidenav">
-        <h4 class="topic4" title="[% 'Browse by Collection' | loc %]"><span>Collection</span></h4>
+        <h4 class="topic4" title="[% 'Browse by Collection' | loc %]"><span>[% 'Collections' | loc %]</span></h4>
           [%- if linklists.collections.links %]
           <ul class="bullet">
             [%- foreach link in linklists.collections.links %]
@@ -76,7 +76,7 @@
 
       [%- if settings.brand_style && collection.handle && collection.handle != 'all' %]
       <div class="sidenav nav-left">
-        <h4 class="topic4" title="[% 'Browse by Brand' | loc %]"><span>[% 'Browse by Brand' | loc %]</span></h4>
+        <h4 class="topic4" title="[% 'Browse by Brand' | loc %]"><span>[% 'Brands' | loc %]</span></h4>
           [%- if !settings.brand_style || settings.brand_style == 1 %]
           <form action="[% req.url %]" method="get">
             <select name="brand" class="selector" onchange='location.href=this.form.brand.options[this.form.brand.selectedIndex].value;'>
@@ -98,7 +98,7 @@
       
       [%- if settings.type_style && collection.handle && collection.handle != 'all' %]
       <div class="sidenav nav-left">
-        <h4 class="topic4" title="[% 'Browse by Type' | loc %]"><span>[% 'Browse by Type' | loc %]</span></h4>
+        <h4 class="topic4" title="[% 'Browse by Type' | loc %]"><span>[% 'Types' | loc %]</span></h4>
           [%- if !settings.type_style || settings.type_style == 1 %]
           <form action="[% req.url %]" method="get">
             <select name="type" class="selector" onchange='location.href=this.form.type.options[this.form.type.selectedIndex].value;'>

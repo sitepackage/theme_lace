@@ -71,7 +71,11 @@
             [%- else %]
             <form action="/cart/add" method="post">
               <input type="hidden" name="variant" value="[% product.variants.first.id %]" />
-              <input type="button" class="buttons add_to_cart" onclick="submit(); return false" title="[% 'Add to Cart' | loc %]" />
+              [% if !product.available %]
+                [% '<span class="view">view</span>'| link_to (product.uri, product.name) %]
+              [% else%]            
+              <input type="image" name="add" value="Add to Cart" src="[% 'cart_add_mini.png' | asset_uri %]" />
+              [%- end %]   
             </form>
             [%- end %]
           </div>
