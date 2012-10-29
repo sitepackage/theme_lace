@@ -160,6 +160,19 @@
        [%- end %] 
     </div> 
 
+    <div class="side_banner">
+      [% '<span class="contact"></span>' | link_to settings.contact_uri if settings.contact_uri %]    
+      [%- if linklists.${settings.linklist_banner}.links.size %]
+      [%- links = linklists.${settings.linklist_banner}.links %]
+        [%- foreach link in links %]
+          <ul>
+          [%- link.name = link.name | html %]
+          <li>[% link.featured_image.src | image_uri | image_tag | link_to (link.uri, link.name, link.target) %]</li>
+          </ul>
+        [%- end %]               
+      [%- end %]
+    </div> 
+<!--
         <div class="side_banner">
             [% '<span class="contact"></span>' | link_to settings.contact_uri if settings.contact_uri %]  
             [%- if linklists.sidebar.links.size %]
@@ -170,8 +183,11 @@
               [%- end %]
             </ul>
             [%- end %]
-          </div>    
+          </div>
+-->          
   </div>
+  
+  
 
   <div id="content_container">
     <div class="mainnav">

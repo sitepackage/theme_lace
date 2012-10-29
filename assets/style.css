@@ -627,7 +627,7 @@ form .hint_area {
 }
 #product .extra_images {
 	padding: 0 0 10px 0;
-  width:250px;
+  width:242px;
 }
 #product .extra_images ul {
 	padding: 0;
@@ -642,8 +642,11 @@ form .hint_area {
 	width: 50px;
 	height: 50px;
 	background: url('blank.png') no-repeat center center #fff;
-    margin: 5px 10px 5px 0;
-    border: 1px solid #ebebeb;
+  margin: 5px 11px 5px 0;
+  border: 1px solid #ebebeb;
+}
+#product .extra_images .last div {
+  margin: 5px 0px 5px 0;
 }
 #product .buy {
 }
